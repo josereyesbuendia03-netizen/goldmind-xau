@@ -1,23 +1,27 @@
-from telegram.ext import (
-    ApplicationBuilder,
-    CommandHandler,
-    CallbackQueryHandler
-)
+from telegram.ext import Application, CommandHandler
+import os
 
-from config import BOT_TOKEN
-from handlers.start import start
-from handlers.play import play, predict
-from handlers.ranking import ranking
+BOT_TOKEN = os.getenv("8365594240:AAHWgX27vCQdPEefWZQwvCLTbmf-M9qcOxc")
+
+async def start(update, context):
+    await update.message.reply_text(
+        "🤖 GoldMind XAU activo.\n\nUsa /price para ver el precio del oro."
+    )
+
+async def price(update, context):
+    await update.message.reply_text(
+        "📊 Precio XAU/USD próximamente conectado."
+    )
 
 def main():
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    app = Application.builder().token(8365594240:AAHWgX27vCQdPEefWZQwvCLTbmf-M9qcOxc).build()
 
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CallbackQueryHandler(play, pattern="^play$"))
-    app.add_handler(CallbackQueryHandler(predict, pattern="^(up|down)_"))
-    app.add_handler(CallbackQueryHandler(ranking, pattern="^ranking$"))
+    app.add_handler(CommandHandler("price", price))
 
-    print("🤖 GoldMind XAU iniciado")
+    print("🤖 Bot iniciado y en ejecución")
+
+    # 🔥 ESTA LÍNEA ES LA CLAVE
     app.run_polling()
 
 if __name__ == "__main__":
